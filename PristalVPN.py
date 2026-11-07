@@ -4,6 +4,7 @@ import json
 import os
 import socket
 import subprocess
+import sys
 import threading
 import time
 import tkinter as tk
@@ -16,7 +17,7 @@ import webbrowser
 import ctypes
 
 APP = "Pristal VPN"
-ROOT = Path(__file__).resolve().parent
+ROOT = Path(sys.executable).resolve().parent if getattr(sys, "frozen", False) else Path(__file__).resolve().parent
 CORE = ROOT / "sing-box.exe"
 CONFIG = ROOT / "pristal-sing-box.json"
 TIMEOUT = 2.5
@@ -164,9 +165,9 @@ class PristalApp:
             return
         if not CORE.exists():
             messagebox.showwarning(
-                APP, "Рядом с PristalVPN.py не найден sing-box.exe. "
-                "Скачайте архив Windows AMD64 с официальной страницы релизов "
-                "и поместите sing-box.exe рядом с программой.")
+                APP, "Рядом с PristalVPN.exe не найден sing-box.exe. "
+                "Распакуйте комплект PristalVPN-Windows-x64 и держите оба EXE "
+                "в одной папке. Скачать sing-box можно с официальной страницы релизов.")
             webbrowser.open("https://github.com/SagerNet/sing-box/releases")
             return
         config = {
