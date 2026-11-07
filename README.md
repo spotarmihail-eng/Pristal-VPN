@@ -13,23 +13,24 @@
 - Configures Windows system proxy to `127.0.0.1:2080` and restores the previous settings when stopped normally.
 - Exports the discovered list to CSV.
 
-## Requirements
+## Download for Windows
 
-- Windows 10 or Windows 11.
-- Python 3.10+ (for running from source).
-- The Windows AMD64 `sing-box.exe` binary from the [official sing-box releases](https://github.com/SagerNet/sing-box/releases).
+Open the repository's **Actions → Build Windows EXE** workflow, run it with **Run workflow**, and download the `PristalVPN-Windows-x64` artifact. The ZIP contains both required files:
+
+- `PristalVPN.exe`
+- `sing-box.exe`
+
+Extract both files into the same folder, then run `PristalVPN.exe`. The build workflow downloads the latest stable official Windows AMD64 sing-box release automatically.
 
 ## Run from source
 
 1. Download or clone this repository.
 2. Install Python 3.10+ from [python.org](https://www.python.org/downloads/windows/).
-3. Download the Windows AMD64 sing-box release from its official GitHub page.
+3. Download the Windows AMD64 sing-box release from the [official sing-box releases](https://github.com/SagerNet/sing-box/releases).
 4. Extract `sing-box.exe` into the same folder as `PristalVPN.py`.
 5. Double-click `run.bat` or run `py -3 PristalVPN.py` in Command Prompt.
-6. Click **Найти прокси**, select a row, then click **Запустить выбранный**.
-7. Click **Остановить** before exiting to stop sing-box and restore the system proxy settings.
 
-## Build a Windows EXE
+## Build locally
 
 Open PowerShell in the project folder:
 
@@ -38,12 +39,11 @@ py -m pip install pyinstaller
 py -m PyInstaller --onefile --windowed --name PristalVPN PristalVPN.py
 ```
 
-The executable will be created at `dist\PristalVPN.exe`. Keep `sing-box.exe` beside the generated EXE.
+Copy the official Windows AMD64 `sing-box.exe` beside `dist\\PristalVPN.exe`. The app looks for the engine beside the executable when packaged.
 
 ## Security and limitations
 
-- Public proxies are operated by unknown third parties. They may log connection metadata, be unreliable, or intercept unencrypted traffic.
-- Do not use public proxies for banking, payments, passwords, or sensitive accounts.
+- Public proxies are operated by unknown third parties. They may log connection metadata, be unreliable, or intercept unencrypted traffic. Do not use public proxies for banking, payments, passwords, or sensitive accounts.
 - A successful TCP connection test does **not** verify that the proxy protocol works, that it is private, or that it is safe.
 - The displayed latency is the TCP connection time to the proxy endpoint, not game ping or end-to-end latency.
 - The app does not provide a TUN interface, a kill switch, DNS leak protection, or guaranteed routing for every application.
@@ -51,10 +51,10 @@ The executable will be created at `dist\PristalVPN.exe`. Keep `sing-box.exe` bes
 
 ## Third-party components and data sources
 
-- [sing-box](https://github.com/SagerNet/sing-box) — proxy engine; distributed separately by its maintainers.
+- [sing-box](https://github.com/SagerNet/sing-box) — proxy engine. The Windows build workflow downloads its official release; see the upstream project for its license and notices.
 - [TheSpeedX/PROXY-List](https://github.com/TheSpeedX/PROXY-List) — community-maintained public proxy lists.
 
-Review the third-party projects' licenses and terms before redistributing their binaries or data.
+Review third-party licenses and notices before redistributing binaries.
 
 ## Contributing
 
