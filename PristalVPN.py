@@ -18,7 +18,8 @@ import ctypes
 
 APP = "Pristal VPN"
 ROOT = Path(sys.executable).resolve().parent if getattr(sys, "frozen", False) else Path(__file__).resolve().parent
-CORE = ROOT / "sing-box.exe"
+BUNDLE_ROOT = Path(getattr(sys, "_MEIPASS", ROOT))
+CORE = BUNDLE_ROOT / "sing-box.exe"
 CONFIG = ROOT / "pristal-sing-box.json"
 TIMEOUT = 2.5
 SOURCES = [
@@ -81,9 +82,6 @@ class PristalApp:
         actions.pack(fill="x")
         self.scan_button = ttk.Button(actions, text="Найти прокси", command=self.scan)
         self.scan_button.pack(side="left")
-        ttk.Button(actions, text="Официальный sing-box", command=lambda: webbrowser.open(
-            "https://github.com/SagerNet/sing-box/releases")).pack(side="left", padx=8)
-
         columns = ("type", "host", "port", "latency", "status")
         self.table = ttk.Treeview(self.root, columns=columns, show="headings")
         for key, label, width in [
@@ -165,10 +163,9 @@ class PristalApp:
             return
         if not CORE.exists():
             messagebox.showwarning(
-                APP, "Рядом с PristalVPN.exe не найден sing-box.exe. "
-                "Распакуйте комплект PristalVPN-Windows-x64 и держите оба EXE "
-                "в одной папке. Скачать sing-box можно с официальной страницы релизов.")
-            webbrowser.open("https://github.com/SagerNet/sing-box/releases")
+                APP, "Встроенный сетевой движок не найден. Возможно, приложение "
+                "запущено из неполной или повреждённой сборки. Скачайте PristalVPN.exe "
+                "заново из последнего успешного GitHub Actions artifact.")
             return
         config = {
             "log": {"level": "warn"},
